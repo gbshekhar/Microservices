@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+#    gateway:
+#      routes:
+#        - id: movies-info-service
+#          uri: lb://MOVIES-INFO-SERVICE
+#          predicates:
+#            - Path=/movieinfos/**
+#          filters:
+#            - "RewritePath=/movieinfos(?<segment>/?.*),/v1/movieinfos${segment}"
+#        - id: movies-review-service
+#          uri: lb://MOVIES-REVIEW-SERVICE
+#          predicates:
+#            - Path=/reviews
+#          filters:
+#            - "RewritePath=/reviews(?<segment>/?.*),/v1/reviews${segment}"
+#        - id: movies-service
+#          uri: lb://MOVIES-SERVICE
+#          predicates:
+#            - Path=/movies/**, /v2/movies/**
+#          filters:
+#            - "RewritePath=/movies(?<segment>/?.*),/v1/movies${segment}"
+#        - id: service-registry
+#          uri: http://localhost:8761
+#          predicates:
+#            - Path=/eureka/main
+#          filters:
+#            - SetPath=/
+#        - id: service-registry-static
+#          uri: http://localhost:8761
+#          predicates:
+#            - Path=/eureka/**
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway: TRACE
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true

@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: movies-service
+server:
+  port: 8083
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-with-registry: true
+restClient:
+  moviesInfoUrl: http://movies-info-service/v1/movieinfos
+  reviewsUrl: http://MOVIES-REVIEW-SERVICE/v1/reviews

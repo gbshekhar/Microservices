@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: movies-info-service
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: local
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+server:
+  port: 8081
+---
+spring:
+  config:
+    activate:
+      on-profile: non-prod
+  data:
+    mongo:
+      host: localhost
+      port: 27017
+      database: non-prod

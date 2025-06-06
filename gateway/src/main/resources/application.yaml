@@ -47,3 +47,36 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     register-with-eureka: true
     fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+  health:
+    circuitbreakers:
+      enabled: true
+  metrics:
+    enable:
+      resilience4j.circuitbreaker: true
+
+#Circuit Breaker
+resilience4j:
+  circuitbreaker:
+    instances:
+      gatewayService:
+        registerHealthIndicator: true           # Enables actuator health info
+        slidingWindowType: COUNT_BASED          # COUNT_BASED or TIME_BASED
+        slidingWindowSize: 10                   # Number of calls to keep in window
+        minimumNumberOfCalls: 5                 # Minimum calls before calculating failure rate
+        failureRateThreshold: 50                # % of failures to trip circuit
+        waitDurationInOpenState: 10s            # How long to stay OPEN before attempting HALF_OPEN
+        permittedNumberOfCallsInHalfOpenState: 3 # How many test calls allowed in HALF_OPEN
+        automaticTransitionFromOpenToHalfOpenEnabled: true # Automatically move from OPEN to HALF_OPEN after waitDuration
+        recordExceptions:
+          - java.net.ConnectException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.reactive.function.client.WebClientRequestException

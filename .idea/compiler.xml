@@ -10,16 +10,16 @@
         <module name="service-reg" />
         <module name="gateway" />
       </profile>
-      <profile name="Annotation profile for movies-review-service" enabled="true">
+      <profile name="Annotation profile for movies-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="movies-review-service" />
-        <module name="movies-info-service" />
         <module name="movies-service" />
+        <module name="movies-info-service" />
+        <module name="movies-review-service" />
       </profile>
     </annotationProcessing>
   </component>

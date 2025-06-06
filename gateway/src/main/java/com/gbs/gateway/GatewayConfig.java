@@ -13,6 +13,10 @@ public class GatewayConfig {
        return builder.routes()
                .route("movies-info-service", predicateSpec ->
                        predicateSpec.path("/v1/movieinfos", "/v1/movieinfos/**")
+                               .filters(gatewayFilterSpec ->
+                                       gatewayFilterSpec.circuitBreaker(config ->
+                                               config.setName("gatewayService")
+                                                       .setFallbackUri("forward:/fallback/movies")))
 //                               .filters(gatewayFilterSpec ->
 //                                       gatewayFilterSpec.rewritePath("/movieinfos(?<segment>/?.*)",
 //                                       "/v1/movieinfos${segment}"))

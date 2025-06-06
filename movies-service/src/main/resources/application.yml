@@ -14,3 +14,37 @@ eureka:
 restClient:
   moviesInfoUrl: http://movies-info-service/v1/movieinfos
   reviewsUrl: http://MOVIES-REVIEW-SERVICE/v1/reviews
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+  health:
+    circuitbreakers:
+      enabled: true
+
+#Circuit Breaker
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true           # Enables actuator health info
+        slidingWindowType: COUNT_BASED          # COUNT_BASED or TIME_BASED
+        slidingWindowSize: 10                   # Number of calls to keep in window
+        minimumNumberOfCalls: 5                 # Minimum calls before calculating failure rate
+        failureRateThreshold: 50                # % of failures to trip circuit
+        waitDurationInOpenState: 10s            # How long to stay OPEN before attempting HALF_OPEN
+        permittedNumberOfCallsInHalfOpenState: 3 # How many test calls allowed in HALF_OPEN
+        automaticTransitionFromOpenToHalfOpenEnabled: true # Automatically move from OPEN to HALF_OPEN after waitDuration
+        recordExceptions:
+          - java.net.ConnectException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+#        ignoreExceptions:
+#          - com.example.YourIgnoredException    # Optional: ignored exceptions
+    instances:
+      moviesService:
+        baseConfig: default
